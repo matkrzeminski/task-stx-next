@@ -37,7 +37,7 @@
         {% endif %} " alt="{{ book.title }}"></td>
           <td>{{ book.language|upper }}</td>
           <td>
-            <a class="btn btn-danger mb-1" href="{% url 'books:delete' book.pk %}">Delete</a>
+            <a class="btn btn-danger" href="{% url 'books:delete' book.pk %}">Delete</a>
             <a class="btn btn-dark" href="{% url 'books:update' book.pk %}">Update</a>
           </td>
         </tr>

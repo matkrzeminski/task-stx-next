@@ -55,5 +55,8 @@ class BookImportView(FormView):
         if not book_data:
             form.add_error(None, "No books found.")
             return self.form_invalid(form)
-        Book.objects.create(**book_data)
+        book, created = Book.objects.get_or_create(**book_data)
+        if not created:
+            form.add_error(None, "Book already exists.")
+            return self.form_invalid(form)
         return super().form_valid(form)
