@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  Filter
+{% endblock %}
+
+{% block content %}
+  <form method="get" class="container-md">
+    {{ filter.form|crispy }}
+    <input type="submit" value="Filter" class="btn btn-primary mb-3 "/>
+  </form>
+  <main class="container-md mt-3 overflow-auto">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Publication Date</th>
+        <th>ISBN</th>
+        <th>Pages</th>
+        <th>Cover</th>
+        <th>Language</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for book in filter.qs %}
+        <tr>
+          <td>{{ book.title }}</td>
+          <td>{{ book.author }}</td>
+          <td>{{ book.published_date }}</td>
+          <td>{{ book.isbn }}</td>
+          <td>{{ book.pages }}</td>
+          <td><img src="{% if not book.cover %}https://books.google.pl/googlebooks/images/no_cover_thumb.gif
+        {% else %}{{ book.cover }}
+        {% endif %} " alt="{{ book.title }}"></td>
+          <td>{{ book.language|upper }}</td>
+          <td>
+            <a class="btn btn-danger mb-1" href="{% url 'books:delete' book.pk %}">Delete</a>
+            <a class="btn btn-dark" href="{% url 'books:update' book.pk %}">Update</a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </main>
+{% endblock %}

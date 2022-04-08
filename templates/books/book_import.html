@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  Import a book
+{% endblock %}
+
+
+{% block content %}
+  <h1 class="container-md">Import a book</h1>
+  <form action="." method="post" class="container-md">
+    {% csrf_token %}
+    {% crispy form %}
+  </form>
+{% endblock %}
