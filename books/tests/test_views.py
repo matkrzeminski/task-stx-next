@@ -137,7 +137,3 @@ def test_book_delete_view(client, book):
     response = client.get(url)
     assertNotContains(response, book.title)
     assertNotContains(response, book.author)
-    assertNotContains(response, book.published_date)
-    assertNotContains(response, book.isbn)
-    assertNotContains(response, book.pages)
-    assertNotContains(response, book.language)
