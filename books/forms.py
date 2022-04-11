@@ -66,7 +66,7 @@ class BookForm(forms.ModelForm):
             ),
             Row(
                 Column("cover", css_class="form-group col-md-6 mb-0"),
-                Column("language", css_class="form-group " "col-md-6 mb-0"),
+                Column("language", css_class="form-group col-md-6 mb-0"),
                 css_class="form-row",
             ),
             Submit("submit", "Submit", css_class="float-end"),

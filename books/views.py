@@ -3,6 +3,7 @@ from django.views.generic import UpdateView, CreateView, FormView, DeleteView
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters.views import FilterView
 from rest_framework import generics, permissions
+from rest_framework.filters import SearchFilter
 
 from .filters import BookFilter
 from .forms import BookImportForm, BookForm
@@ -40,9 +41,10 @@ class BookUpdateView(UpdateView):
 class BookListAPIView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]
-    filter_backends = [DjangoFilterBackend]
+    permission_classes = (permissions.AllowAny,)
+    filter_backends = (DjangoFilterBackend, SearchFilter)
     filterset_class = BookFilter
+    search_fields = ("title", "author", "language", "published_date")
 
 
 class BookImportView(FormView):

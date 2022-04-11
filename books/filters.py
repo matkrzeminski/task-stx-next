@@ -1,23 +1,22 @@
-from django_filters.filters import DateFromToRangeFilter
+from django_filters.filters import DateFromToRangeFilter, CharFilter
 from django_filters.rest_framework import FilterSet
+from django_filters.widgets import RangeWidget
 
 from .models import Book
 
 
 class BookFilter(FilterSet):
-    published_date = DateFromToRangeFilter()
+    title = CharFilter(lookup_expr="icontains", label="Title", field_name="title")
+    author = CharFilter(lookup_expr="icontains", label="Author", field_name="author")
+    language = CharFilter(
+        lookup_expr="iexact", label="Language Code", field_name="language"
+    )
+    date = DateFromToRangeFilter(
+        label="Date Published",
+        field_name="published_date",
+        widget=RangeWidget(attrs={'placeholder': "YYYY-MM-DD", 'class': "form-group col-xs mb-0"})
+    )
 
     class Meta:
         model = Book
-        fields = {
-            "title": ["icontains"],
-            "author": ["icontains"],
-            "language": ["iexact"],
-            "published_date": [],
-        }
-
-    def __init__(self, *args, **kwargs):
-        super(BookFilter, self).__init__(*args, **kwargs)
-        self.filters["title__icontains"].label = "Title"
-        self.filters["author__icontains"].label = "Author"
-        self.filters["language__iexact"].label = "Language Code"
+        fields = ("title", "author", "language", "date")
